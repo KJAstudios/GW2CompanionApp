@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">GW2CompanionApp</string>
+
+    <!-- MainDailyFragment Strings -->
+    <string name="fractal_daily_text">Fractal Dailies</string>
+    <string name="pve_daily_text">PvE Dailies</string>
+    <string name="wvw_daily_text">WvW Dailies</string>
+    <string name="pvp_daily_text">PvP Dailies</string>
+
+    <!-- DailyFragment Strings-->
+    <string name="temp_daily_text">Hello blank fragment</string>
+    <string name="back_button">Back</string>
+</resources>

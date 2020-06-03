@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_v1_url">https://api.guildwars2.com/v1</string>
+    <string name="api_v2_url">https://api.guildwars2.com/v2</string>
+    <string name="daily_endpoint">/achievements/daily</string>
+    <string name="achievement_endpoint">/achievements?id=</string>
+
+</resources>

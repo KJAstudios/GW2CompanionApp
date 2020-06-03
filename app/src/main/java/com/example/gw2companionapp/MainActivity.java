@@ -13,13 +13,6 @@ import com.trialclasses.CacheTest;
 
 public class MainActivity extends AppCompatActivity {
 
-    //TODO PUT THIS SHIT ON GITHUB
-    //TODO PUT THIS SHIT ON GITHUB
-    //TODO PUT THIS SHIT ON GITHUB
-    //TODO PUT THIS SHIT ON GITHUB
-    //TODO PUT THIS SHIT ON GITHUB
-    //TODO PUT THIS SHIT ON GITHUB
-
     public static Context context;
     private ParsedDailyAchievements dailyAchievements = null;
     private boolean dailiesLoaded;
@@ -46,12 +39,13 @@ public class MainActivity extends AppCompatActivity {
             } catch (FailedHttpCallException e) {
                 //TODO figure out a way to handle this eloquently
             }
-
-            //start the first fragment after the info for dailies are loaded
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragmentManagerLayout, new MainDailyFragment());
-            ft.commit();
         }
+
+        //start the first fragment after the info for dailies are loaded
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragmentManagerLayout, new MainDailyFragment());
+        ft.commit();
+
     }
 
 

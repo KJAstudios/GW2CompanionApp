@@ -27,48 +27,45 @@ public class MainDailyFragment extends Fragment {
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //TODO abstract this to a single function
         //click listeners for buttons
-        view.findViewById(R.id.fractal_daily_button).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.fragmentManagerLayout, new DailyFragment());
-                        ft.commit();
-                    }
-                }
-        );
-        view.findViewById(R.id.pve_daily_button).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.fragmentManagerLayout, new DailyFragment());
-                        ft.commit();
-                    }
-                }
-        );
-        view.findViewById(R.id.pvp_daily_button).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.fragmentManagerLayout, new DailyFragment());
-                        ft.commit();
-                    }
-                }
-        );
-        view.findViewById(R.id.wvw_daily_button).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.fragmentManagerLayout, new DailyFragment());
-                        ft.commit();
-                    }
-                }
-        );
+        setButtonListener(view, "fractal", R.id.fractal_daily_button);
+        setButtonListener(view, "pve", R.id.pve_daily_button);
+        setButtonListener(view, "pvp", R.id.pvp_daily_button);
+        setButtonListener(view, "wvw", R.id.wvw_daily_button);
     }
 
+    /**
+     * sets up a click listener for a button, to call the DailyFragment that displays all the achievments
+     * in that category
+     * @param view view to find button
+     * @param dailyType sends the type of daily to the DailyFragment
+     * @param id id of button to find
+     */
+    private void setButtonListener(View view, final String dailyType, int id) {
+        view.findViewById(id).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DailyFragment fragment = createDailyFragment(dailyType);
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.fragmentManagerLayout, fragment);
+                        ft.commit();
+                    }
+                }
+        );
+
+    }
+
+    /**
+     * creates the DailyFragment and puts the daily type in bundle to send
+     * @param dailyType category of dailies for the DailyFragment to display
+     * @return the built DailyFragment
+     */
+    private DailyFragment createDailyFragment(String dailyType) {
+        DailyFragment fragment = new DailyFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("dailyType", dailyType);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 }

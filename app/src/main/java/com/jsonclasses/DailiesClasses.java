@@ -18,7 +18,20 @@ public class DailiesClasses {
         public ArrayList<DailyAchievement> fractals;
         public ArrayList<DailyAchievement> special;
 
-
+        //getter so you can select what array to get, instead of having to specify
+        public ArrayList<DailyAchievement> getAchieveList(String type) {
+            switch (type) {
+                case "pve":
+                    return pve;
+                case "pvp":
+                    return pvp;
+                case "fractal":
+                    return fractals;
+                case "wvw":
+                    return wvw;
+            }
+            return null;
+        }
     }
 
     public class SingleAchievement extends AbstractAchievement {

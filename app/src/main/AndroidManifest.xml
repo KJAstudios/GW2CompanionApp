@@ -3,6 +3,7 @@
     package="com.example.gw2companionapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.screen.portrait"/>
 
     <application
         android:allowBackup="true"
@@ -10,8 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="nosensor">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

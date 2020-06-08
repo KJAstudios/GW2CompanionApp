@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.datastructures.ParsedDailyAchievements;
+
 import org.jetbrains.annotations.NotNull;
 
 
@@ -37,6 +39,7 @@ public class MainDailyFragment extends Fragment {
     /**
      * sets up a click listener for a button, to call the DailyFragment that displays all the achievments
      * in that category
+     * checks if the dailies have been loaded, if not, send to loading screen
      * @param view view to find button
      * @param dailyType sends the type of daily to the DailyFragment
      * @param id id of button to find
@@ -46,10 +49,18 @@ public class MainDailyFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        DailyFragment fragment = createDailyFragment(dailyType);
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.fragmentManagerLayout, fragment);
-                        ft.commit();
+                        if(ParsedDailyAchievements.checkDailiesLoaded()) {
+                            DailyFragment fragment = createDailyFragment(dailyType);
+                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.fragmentManagerLayout, fragment);
+                            ft.commit();
+                        }
+                        else{
+                            LoadingFragment fragment = createLoadingFragment(dailyType);
+                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.fragmentManagerLayout, fragment);
+                            ft.commit();
+                        }
                     }
                 }
         );
@@ -66,6 +77,19 @@ public class MainDailyFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("dailyType", dailyType);
         fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    /**
+     * creates a LoadingFragment that holds the data needed to load the DailyFragment onces
+     * the dailies are loaded
+     * @param dailyType what dailyType menu to go to after load complete
+     * @return the bundled fragment
+     */
+    private LoadingFragment createLoadingFragment(String dailyType){
+        LoadingFragment fragment = new LoadingFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("dailyType", dailyType);
         return fragment;
     }
 }

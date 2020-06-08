@@ -11,6 +11,6 @@
     <string name="temp_daily_text">Hello blank fragment</string>
     <string name="back_button">Back</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- LoadingFragment Strings-->
+    <string name="loading_text">LOADING</string>
 </resources>

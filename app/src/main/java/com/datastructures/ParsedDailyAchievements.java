@@ -1,5 +1,10 @@
 package com.datastructures;
 
+import android.content.Context;
+
+import com.gw2apiparser.FailedHttpCallException;
+import com.jsonclasses.JsonParser;
+
 import java.util.ArrayList;
 
 /**
@@ -7,12 +12,51 @@ import java.util.ArrayList;
  * full achievement info
  */
 public class ParsedDailyAchievements {
-    ArrayList<FullAchievement> pve;
-    ArrayList<FullAchievement> pvp;
-    ArrayList<FullAchievement> wvw;
-    ArrayList<FullAchievement> fractals;
-    ArrayList<FullAchievement> special;
-    String error;
+    private ArrayList<FullAchievement> pve;
+    private ArrayList<FullAchievement> pvp;
+    private ArrayList<FullAchievement> wvw;
+    private ArrayList<FullAchievement> fractals;
+    private ArrayList<FullAchievement> special;
+    private String error;
+    private static ParsedDailyAchievements dailyAchievements;
+
+
+    //made this a singleton so that I can access it from anywhere, and only make one copy
+    public static ParsedDailyAchievements getInstance(Context context){
+        if (dailyAchievements == null){
+            try {
+                dailyAchievements = JsonParser.getDailies();
+            }
+            catch (FailedHttpCallException e){
+                dailyAchievements = new ParsedDailyAchievements();
+                dailyAchievements.setError(e.getMessage());
+            }
+        }
+        return dailyAchievements;
+    }
+
+    //checker to see if dailies have loaded/failed yet
+    public static boolean checkDailiesLoaded(){
+        if(dailyAchievements == null){
+            return false;
+        }
+        return true;
+    }
+
+    //getter so you can select what array to get, instead of having to specify
+    public ArrayList<FullAchievement> getAchieveList(String type) {
+        switch (type) {
+            case "pve":
+                return pve;
+            case "pvp":
+                return pvp;
+            case "fractal":
+                return fractals;
+            case "wvw":
+                return wvw;
+        }
+        return null;
+    }
 
 
     /**
@@ -60,5 +104,9 @@ public class ParsedDailyAchievements {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    public String getError(){
+        return error;
     }
 }

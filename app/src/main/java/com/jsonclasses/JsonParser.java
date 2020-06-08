@@ -1,7 +1,10 @@
-package com.gw2apiparser;
+package com.jsonclasses;
 
 import com.datastructures.ParsedDailyAchievements;
 import com.google.gson.Gson;
+import com.gw2apiparser.FailedHttpCallException;
+import com.gw2apiparser.HttpGetRequest;
+import com.gw2apiparser.UrlBuilder;
 import com.jsonclasses.DailiesClasses;
 import com.jsonclasses.jsonclassconverters.DailiesToParsedDailies;
 

@@ -10,9 +10,8 @@ import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.datastructures.FullAchievement;
 import com.datastructures.ParsedDailyAchievements;
-import com.gw2apiparser.FailedHttpCallException;
-import com.gw2apiparser.JsonParser;
 import com.gw2apiparser.JsonParserFromFile;
 import com.jsonclasses.DailiesClasses;
 
@@ -29,14 +28,8 @@ public class DailyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Bundle bundle = this.getArguments();
-        if (bundle != null) {
             dailyType = bundle.getString("dailyType");
-        }
-        try {
-            allDailies = JsonParserFromFile.getDailiesFromFile(MainActivity.context);
-        } catch (Exception e) {
 
-        }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_daily, container, false);
     }
@@ -50,6 +43,7 @@ public class DailyFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.fragmentManagerLayout, new MainDailyFragment());
                         ft.commit();
@@ -63,24 +57,14 @@ public class DailyFragment extends Fragment {
      * @param view passing the view from OnViewCreated so it knows where to put the list
      */
     private void populateAchievementList(View view) {
+        parsedAchievements = ParsedDailyAchievements.getInstance(MainActivity.context);
         LinearLayout achievementList = view.findViewById(R.id.achievement_layout);
-        for (DailiesClasses.DailyAchievement achievement : allDailies.getAchieveList(dailyType)) {
-            DailiesClasses.SingleAchievement currentAchieve = null;
+        for (FullAchievement achievement : parsedAchievements.getAchieveList(dailyType)) {
             Button button = new Button(MainActivity.context);
             button.setLayoutParams(new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            try {
-                currentAchieve = JsonParser.getAchievement(achievement.id);
-            } catch (FailedHttpCallException e) {
-                //TODO catch this more eloquently because this is stupid
-                button.setText(e.getMessage());
-                achievementList.addView(button);
-            }
-            if (currentAchieve != null) {
-                button.setText(currentAchieve.getName());
-                button.setTag(currentAchieve.getId());
-                achievementList.addView(button);
-            }
+            button.setText(achievement.getName());
+            achievementList.addView(button);
         }
     }
 }

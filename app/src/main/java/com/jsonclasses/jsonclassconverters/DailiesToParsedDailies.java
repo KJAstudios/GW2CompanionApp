@@ -2,8 +2,9 @@ package com.jsonclasses.jsonclassconverters;
 
 import com.datastructures.FullAchievement;
 import com.datastructures.ParsedDailyAchievements;
+import com.example.gw2companionapp.MainActivity;
 import com.gw2apiparser.FailedHttpCallException;
-import com.gw2apiparser.JsonParser;
+import com.jsonclasses.JsonParser;
 import com.jsonclasses.DailiesClasses;
 
 import java.util.ArrayList;

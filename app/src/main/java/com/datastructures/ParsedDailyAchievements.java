@@ -58,6 +58,15 @@ public class ParsedDailyAchievements {
         return null;
     }
 
+    public FullAchievement getAchievement(String type, int id){
+        ArrayList<FullAchievement> list = getAchieveList(type);
+        for(FullAchievement achievement: list){
+            if(achievement.getId() == id){
+                return achievement;
+            }
+        }
+        return null;
+    }
 
     /**
      * getters and setters for the different achievement lists

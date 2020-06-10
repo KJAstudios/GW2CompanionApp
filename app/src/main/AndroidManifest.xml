@@ -3,7 +3,9 @@
     package="com.example.gw2companionapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-feature android:name="android.hardware.screen.portrait"/>
+
 
     <application
         android:allowBackup="true"

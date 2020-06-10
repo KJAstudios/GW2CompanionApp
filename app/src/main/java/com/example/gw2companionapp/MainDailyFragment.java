@@ -90,6 +90,7 @@ public class MainDailyFragment extends Fragment {
         LoadingFragment fragment = new LoadingFragment();
         Bundle bundle = new Bundle();
         bundle.putString("dailyType", dailyType);
+        fragment.setArguments(bundle);
         return fragment;
     }
 }

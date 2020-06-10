@@ -8,8 +8,9 @@ import androidx.fragment.app.Fragment;
 
 import com.datastructures.ParsedDailyAchievements;
 
-public class DataLoaderFragment extends Fragment {
+public class DataLoaderFragment{
     private LoaderListener listener;
+    private HandlerThread handlerThread;
 
     /**
      * classes that want to be notified implement this
@@ -18,12 +19,19 @@ public class DataLoaderFragment extends Fragment {
         public void onLoaded();
     }
 
+    /**
+     * set the listener
+     * @param listener LoadingFragment that wants to listen
+     */
     public void addListener(LoaderListener listener) {
         this.listener = listener;
     }
 
+    /**
+     * creates a thread to wait till the dailies have loaded, then notify the listener
+     */
     public void checkLoading() {
-        HandlerThread handlerThread = new HandlerThread("LoaderListenerHandlerThread");
+        handlerThread = new HandlerThread("LoaderListenerHandlerThread");
         handlerThread.start();
         Looper looper = handlerThread.getLooper();
         Handler handler = new Handler(looper);
@@ -37,5 +45,12 @@ public class DataLoaderFragment extends Fragment {
             }
         };
         handler.post(apiRunnable);
+    }
+
+    /**
+     * code to close the thread once this is no longer needed
+     */
+    public void closeHandler() {
+        handlerThread.quit();
     }
 }

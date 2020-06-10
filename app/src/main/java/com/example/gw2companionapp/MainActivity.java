@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         //show LoadingFragment till info is loaded
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragmentManagerLayout, new LoadingFragment());
-        ft.commit();
         /*
         dailies are loaded here, as attempting to load them in the onCreate crashes the app
          */
@@ -53,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //start the first fragment after the info for dailies are loaded
-        ft = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragmentManagerLayout, new MainDailyFragment());
         ft.commit();
 
@@ -64,18 +61,9 @@ public class MainActivity extends AppCompatActivity {
         handlerThread.quit();
         super.onDestroy();
     }
-
-
-    //old method, saving until using cache is confirmed faster
-    /*
-    private void loadDailies() {
-        try {
-            dailyAchievements = JsonParser.getDailies();
-            dailiesLoaded = true;
-        } catch (FailedHttpCallException e) {
-            dailyAchievements = new ParsedDailyAchievements();
-            dailyAchievements.setError(e.getMessage());
-        }
-    }
-     */
 }
+
+//TODO create bad internet state so if someone doesn't have internet it wont freak
+//TODO create some sort of animation on loading screen to entertain users
+//TODO UI improvements
+//TODO see if load times can be improved on at all

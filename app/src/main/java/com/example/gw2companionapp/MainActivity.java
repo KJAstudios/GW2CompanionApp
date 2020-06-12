@@ -62,8 +62,12 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 }
-
+//MUST DOS BEFORE RELEASE
 //TODO create bad internet state so if someone doesn't have internet it wont freak
 //TODO create some sort of animation on loading screen to entertain users
-//TODO UI improvements
-//TODO see if load times can be improved on at all
+//TODO UI add rewards
+//TODO UI text formatting on achievement screen
+//TODO UI achievement headers for informational organization
+//TODO call achievements in one dump, instead of individual calls
+//TODO add custom logos and splash screen
+//TODO change header bar text to GW2 Dailies

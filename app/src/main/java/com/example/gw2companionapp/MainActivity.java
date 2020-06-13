@@ -71,3 +71,6 @@ public class MainActivity extends AppCompatActivity {
 //TODO call achievements in one dump, instead of individual calls
 //TODO add custom logos and splash screen
 //TODO change header bar text to GW2 Dailies
+
+//KNOWN BUGS
+//fragment state not remembered when apps are switched

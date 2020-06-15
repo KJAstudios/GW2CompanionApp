@@ -32,8 +32,14 @@ public class DailyFragment extends Fragment {
 
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //creates the list of acheivements
-        populateAchievementList(view);
+        //creates the list of achievements
+        //if the daily achievements don't exist, throw it to the error screen
+        if (ParsedDailyAchievements.checkDailiesFailed() == false) {
+            populateAchievementList(view);
+        } else {
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragmentManagerLayout, new ErrorFragment());
+        }
 
         //click listener for back button
         view.findViewById(R.id.back_button).setOnClickListener(
@@ -66,6 +72,7 @@ public class DailyFragment extends Fragment {
 
     /**
      * creates the button with achievement info
+     *
      * @param achievement what achievement to display the name of
      * @return
      */
@@ -80,6 +87,7 @@ public class DailyFragment extends Fragment {
 
     /**
      * sets the click listeners for the achievement list by bundling required info for fragment
+     *
      * @param achievement the achievement to set
      */
     private void setButtonListener(final FullAchievement achievement) {

@@ -86,7 +86,8 @@ public class AchievementFragment extends Fragment {
     /**
      * adds the description text box to the fragment if it's there
      * not sure if this needs abstraction, as it's only used here right now
-     * @param view view to create text in
+     *
+     * @param view        view to create text in
      * @param description what to set the text to
      */
     private void addDescText(View view, String description) {
@@ -128,10 +129,11 @@ public class AchievementFragment extends Fragment {
 
     /**
      * converter from px to dp
+     *
      * @param px value in px
      * @return value in dp
      */
-    private int getDpFromPx(int px){
+    private int getDpFromPx(int px) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px,
                 MainActivity.context.getResources().getDisplayMetrics());
     }

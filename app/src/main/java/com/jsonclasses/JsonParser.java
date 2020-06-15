@@ -2,10 +2,10 @@ package com.jsonclasses;
 
 import com.datastructures.ParsedDailyAchievements;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.gw2apiparser.FailedHttpCallException;
 import com.gw2apiparser.HttpGetRequest;
 import com.gw2apiparser.UrlBuilder;
-import com.jsonclasses.DailiesClasses;
 import com.jsonclasses.jsonclassconverters.DailiesToParsedDailies;
 
 import java.util.concurrent.ExecutionException;
@@ -34,7 +34,12 @@ public class JsonParser {
         if (result == null) {
             throw new FailedHttpCallException("Failed to retrieve info");
         }
-        DailiesClasses.AllDailies dailies = gson.fromJson(result, DailiesClasses.AllDailies.class);
+        DailiesClasses.AllDailies dailies;
+        try {
+            dailies = gson.fromJson(result, DailiesClasses.AllDailies.class);
+        }catch(JsonSyntaxException e){
+            throw new FailedHttpCallException("Dailies failed to load");
+        }
         ParsedDailyAchievements parsedDailyAchievements = DailiesToParsedDailies.getParsedDailies(dailies);
         return parsedDailyAchievements;
     }

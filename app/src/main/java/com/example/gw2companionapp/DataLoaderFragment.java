@@ -4,11 +4,9 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 
-import androidx.fragment.app.Fragment;
-
 import com.datastructures.ParsedDailyAchievements;
 
-public class DataLoaderFragment{
+public class DataLoaderFragment {
     private LoaderListener listener;
     private HandlerThread handlerThread;
 
@@ -17,10 +15,13 @@ public class DataLoaderFragment{
      */
     public interface LoaderListener {
         public void onLoaded();
+
+        public void onFailed();
     }
 
     /**
      * set the listener
+     *
      * @param listener LoadingFragment that wants to listen
      */
     public void addListener(LoaderListener listener) {
@@ -28,7 +29,7 @@ public class DataLoaderFragment{
     }
 
     /**
-     * creates a thread to wait till the dailies have loaded, then notify the listener
+     * creates a thread to wait till the dailies have loaded or failed, then notifies listener
      */
     public void checkLoading() {
         handlerThread = new HandlerThread("LoaderListenerHandlerThread");
@@ -38,10 +39,15 @@ public class DataLoaderFragment{
         Runnable apiRunnable = new Runnable() {
             @Override
             public void run() {
-                while (!ParsedDailyAchievements.checkDailiesLoaded()) {
+                while (!ParsedDailyAchievements.checkDailiesLoaded() &&
+                        !ParsedDailyAchievements.checkDailiesFailed()) {
 
                 }
-                listener.onLoaded();
+                if (ParsedDailyAchievements.checkDailiesLoaded()) {
+                    listener.onLoaded();
+                } else {
+                    listener.onFailed();
+                }
             }
         };
         handler.post(apiRunnable);

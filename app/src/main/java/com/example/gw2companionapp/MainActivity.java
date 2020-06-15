@@ -14,8 +14,6 @@ import com.datastructures.ParsedDailyAchievements;
 public class MainActivity extends AppCompatActivity {
 
     public static Context context;
-    private ParsedDailyAchievements dailyAchievements = null;
-    private boolean dailiesLoaded;
     public static Handler handler;
     private HandlerThread handlerThread;
 
@@ -35,15 +33,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        //show LoadingFragment till info is loaded
         /*
         dailies are loaded here, as attempting to load them in the onCreate crashes the app
          */
         Runnable apiRunnable = new Runnable() {
             @Override
             public void run() {
-                dailyAchievements = ParsedDailyAchievements.getInstance(context);
+                ParsedDailyAchievements.getInstance(context);
             }
         };
         handler.post(apiRunnable);
@@ -63,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 //MUST DOS BEFORE RELEASE
-//TODO create bad internet state so if someone doesn't have internet it wont freak
+//TODO change to start loading screen as first fragment so that if the load fails, it does not show user the app
 //TODO create some sort of animation on loading screen to entertain users
 //TODO UI add rewards
 //TODO UI text formatting on achievement screen
@@ -74,3 +70,4 @@ public class MainActivity extends AppCompatActivity {
 
 //KNOWN BUGS
 //fragment state not remembered when apps are switched
+//pve dailies will sometimes duplicate

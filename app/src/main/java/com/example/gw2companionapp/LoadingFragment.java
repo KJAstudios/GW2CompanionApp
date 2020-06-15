@@ -38,6 +38,9 @@ public class LoadingFragment extends Fragment implements DataLoaderFragment.Load
 
     }
 
+    /**
+     * listener call if the dailies loaded properly
+     */
     @Override
     public void onLoaded() {
         dataLoaderFragment.closeHandler();
@@ -50,7 +53,13 @@ public class LoadingFragment extends Fragment implements DataLoaderFragment.Load
         ft.commit();
     }
 
-    public void setDailyType(String dailyType) {
-        this.dailyType = dailyType;
+    /**
+     * listener call if dailies failed to load
+     */
+    @Override
+    public void onFailed() {
+        FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragmentManagerLayout, new ErrorFragment());
+        ft.commit();
     }
 }

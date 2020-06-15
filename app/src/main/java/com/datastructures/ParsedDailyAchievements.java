@@ -22,12 +22,11 @@ public class ParsedDailyAchievements {
 
 
     //made this a singleton so that I can access it from anywhere, and only make one copy
-    public static ParsedDailyAchievements getInstance(Context context){
-        if (dailyAchievements == null){
+    public static ParsedDailyAchievements getInstance(Context context) {
+        if (dailyAchievements == null) {
             try {
                 dailyAchievements = JsonParser.getDailies();
-            }
-            catch (FailedHttpCallException e){
+            } catch (FailedHttpCallException e) {
                 dailyAchievements = new ParsedDailyAchievements();
                 dailyAchievements.setError(e.getMessage());
             }
@@ -36,11 +35,23 @@ public class ParsedDailyAchievements {
     }
 
     //checker to see if dailies have loaded/failed yet
-    public static boolean checkDailiesLoaded(){
-        if(dailyAchievements == null){
+    public static boolean checkDailiesLoaded() {
+        if (dailyAchievements == null) {
+            return false;
+        } else if (dailyAchievements.getError() != null) {
             return false;
         }
         return true;
+    }
+
+    //checker to see if the dailies failed to load
+    public static boolean checkDailiesFailed() {
+        if (dailyAchievements != null) {
+            if (dailyAchievements.getError() != null) {
+                return true;
+            }
+        }
+        return false;
     }
 
     //getter so you can select what array to get, instead of having to specify
@@ -58,10 +69,10 @@ public class ParsedDailyAchievements {
         return null;
     }
 
-    public FullAchievement getAchievement(String type, int id){
+    public FullAchievement getAchievement(String type, int id) {
         ArrayList<FullAchievement> list = getAchieveList(type);
-        for(FullAchievement achievement: list){
-            if(achievement.getId() == id){
+        for (FullAchievement achievement : list) {
+            if (achievement.getId() == id) {
                 return achievement;
             }
         }
@@ -115,7 +126,10 @@ public class ParsedDailyAchievements {
         this.error = error;
     }
 
-    public String getError(){
+    public String getError() {
+        if (error == null) {
+            return null;
+        }
         return error;
     }
 }

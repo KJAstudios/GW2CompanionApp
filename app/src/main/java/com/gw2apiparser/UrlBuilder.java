@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.example.gw2companionapp.MainActivity;
 import com.example.gw2companionapp.R;
+import com.jsonclasses.DailiesClasses;
+
+import java.util.ArrayList;
 
 public class UrlBuilder {
 
@@ -44,6 +47,7 @@ public class UrlBuilder {
 
     /**
      * returns the URL for getting data on a specific achievement
+     * saved for expansion later
      *
      * @param id id of achievement
      * @return complete String for the achievement URL
@@ -56,27 +60,23 @@ public class UrlBuilder {
         return returnURL;
     }
 
-    private String getURL(String requestType) {
-        requestType.trim();
-        requestType.toLowerCase();
-        switch (requestType) {
-            case "daily":
-                return UrlBuilder.getDailyURL();
-            default:
-                return "Invalid Request";
+    /**
+     * returns the url of an unknown amount of achievements
+     * @param achievements list of achievements to make a url for
+     * @return the completed URL as a String
+     */
+    public static String getAchievementsURL(ArrayList<DailiesClasses.DailyAchievement> achievements){
+        String Url = getBaseUrl(MainActivity.context, 2);
+        Url += MainActivity.context.getString(R.string.multiple_achievements_endpoint);
+        for(int i = 0; i < achievements.size(); i++){
+            String id = Integer.toString(achievements.get(i).id);
+            if(i == 0){
+                Url+=id;
+            }
+            else{
+                Url = Url +"," + id;
+            }
         }
-
-    }
-
-    private String getURL(String requestType, int id) {
-        requestType.trim();
-        requestType.toLowerCase();
-        switch (requestType) {
-            case "achievement":
-                return UrlBuilder.getAchievementURL(id);
-            default:
-                return "Invalid Request";
-        }
-
+        return Url;
     }
 }

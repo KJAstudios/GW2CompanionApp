@@ -3,11 +3,14 @@ package com.jsonclasses;
 import com.datastructures.ParsedDailyAchievements;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.gw2apiparser.FailedHttpCallException;
 import com.gw2apiparser.HttpGetRequest;
 import com.gw2apiparser.UrlBuilder;
 import com.jsonclasses.jsonclassconverters.DailiesToParsedDailies;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class JsonParser {
@@ -37,7 +40,7 @@ public class JsonParser {
         DailiesClasses.AllDailies dailies;
         try {
             dailies = gson.fromJson(result, DailiesClasses.AllDailies.class);
-        }catch(JsonSyntaxException e){
+        } catch (JsonSyntaxException e) {
             throw new FailedHttpCallException("Dailies failed to load");
         }
         ParsedDailyAchievements parsedDailyAchievements = DailiesToParsedDailies.getParsedDailies(dailies);
@@ -45,16 +48,18 @@ public class JsonParser {
     }
 
     /**
-     * calls the api for an individual achievement
+     * calls the api to get the full list of achievements
      *
-     * @param id id of the achievement to return
-     * @return returns the info of the achievement
-     * @throws FailedHttpCallException thrown if any API calls fail
+     * @param achievements list of dailyAchievements to turn into SingleAchievements
+     * @return the list of SingleAchievements to parse the dailies from
+     * @throws FailedHttpCallException thrown if something fails somewhere
      */
-    public static DailiesClasses.SingleAchievement getAchievement(int id) throws FailedHttpCallException {
+    public static ArrayList<DailiesClasses.SingleAchievement> getAchievements(
+            ArrayList<DailiesClasses.DailyAchievement> achievements)
+            throws FailedHttpCallException {
         String result = null;
         Gson gson = new Gson();
-        String url = UrlBuilder.getAchievementURL(id);
+        String url = UrlBuilder.getAchievementsURL(achievements);
         HttpGetRequest getRequest = new HttpGetRequest();
         try {
             result = getRequest.execute(url).get();
@@ -66,8 +71,11 @@ public class JsonParser {
         if (result == null) {
             throw new FailedHttpCallException("Failed to retrieve info");
         }
-        DailiesClasses.SingleAchievement achievement = gson.fromJson(result, DailiesClasses.SingleAchievement.class);
-        return achievement;
+        Type userListType = new TypeToken<ArrayList<DailiesClasses.SingleAchievement>>(){}.getType();
+        ArrayList<DailiesClasses.SingleAchievement> allSingleAchievements = gson.fromJson(
+                result, userListType);
+        return allSingleAchievements;
+
     }
 }
 

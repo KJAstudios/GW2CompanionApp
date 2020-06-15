@@ -2,10 +2,9 @@ package com.jsonclasses.jsonclassconverters;
 
 import com.datastructures.FullAchievement;
 import com.datastructures.ParsedDailyAchievements;
-import com.example.gw2companionapp.MainActivity;
 import com.gw2apiparser.FailedHttpCallException;
-import com.jsonclasses.JsonParser;
 import com.jsonclasses.DailiesClasses;
+import com.jsonclasses.JsonParser;
 
 import java.util.ArrayList;
 
@@ -25,7 +24,9 @@ public class DailiesToParsedDailies {
         parsedDailyAchievements.setPvp(parseAchievements(dailies.pvp));
         parsedDailyAchievements.setWvw(parseAchievements(dailies.wvw));
         parsedDailyAchievements.setFractals(parseAchievements(dailies.fractals));
-        parsedDailyAchievements.setSpecial(parseAchievements(dailies.special));
+        if (!dailies.special.isEmpty()) {
+            parsedDailyAchievements.setSpecial(parseAchievements(dailies.special));
+        }
 
         return parsedDailyAchievements;
     }
@@ -39,22 +40,30 @@ public class DailiesToParsedDailies {
      */
     private static ArrayList<FullAchievement> parseAchievements(ArrayList<DailiesClasses.DailyAchievement> dailyList)
             throws FailedHttpCallException {
+        ArrayList<DailiesClasses.SingleAchievement> singleAchievements =
+                JsonParser.getAchievements(dailyList);
         ArrayList<FullAchievement> tempList = new ArrayList<>();
         if (!dailyList.isEmpty()) {
-            for (DailiesClasses.DailyAchievement daily : dailyList) {
+            for (int i = 0; i < dailyList.size(); i++) {
+                DailiesClasses.DailyAchievement dailyAchievement = dailyList.get(i);
+                DailiesClasses.SingleAchievement singleAchievement = null;
+                //this makes sure all the dailies get parsed, even thought there is a duplicate
+                for (DailiesClasses.SingleAchievement achieve : singleAchievements) {
+                    if (dailyAchievement.id == achieve.getId()) {
+                        singleAchievement = achieve;
+                    }
+                }
                 FullAchievement tempAchievement = new FullAchievement();
-                tempAchievement.setLevelMax(daily.level.max);
-                tempAchievement.setLevelMin(daily.level.min);
-                tempAchievement.setId(daily.id);
-                DailiesClasses.SingleAchievement achievementData = JsonParser.getAchievement(tempAchievement.getId());
-                tempAchievement.setName(achievementData.getName());
-                tempAchievement.setDescription(achievementData.getDescription());
-                tempAchievement.setRequirement(achievementData.getRequirement());
-                tempAchievement.setLocked_text(achievementData.getLocked_text());
-                tempAchievement.setType(achievementData.getType());
-                tempAchievement.setFlags(achievementData.getFlags());
-                tempAchievement.setRewards(achievementData.getRewards());
-
+                tempAchievement.setLevelMax(dailyAchievement.level.max);
+                tempAchievement.setLevelMin(dailyAchievement.level.min);
+                tempAchievement.setId(dailyAchievement.id);
+                tempAchievement.setName(singleAchievement.getName());
+                tempAchievement.setDescription(singleAchievement.getDescription());
+                tempAchievement.setRequirement(singleAchievement.getRequirement());
+                tempAchievement.setLocked_text(singleAchievement.getLocked_text());
+                tempAchievement.setType(singleAchievement.getType());
+                tempAchievement.setFlags(singleAchievement.getFlags());
+                tempAchievement.setRewards(singleAchievement.getRewards());
                 tempList.add(tempAchievement);
             }
         }

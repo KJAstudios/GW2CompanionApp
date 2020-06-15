@@ -32,6 +32,7 @@ public class DailyFragment extends Fragment {
 
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         //creates the list of achievements
         //if the daily achievements don't exist, throw it to the error screen
         if (ParsedDailyAchievements.checkDailiesFailed() == false) {
@@ -39,7 +40,9 @@ public class DailyFragment extends Fragment {
         } else {
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragmentManagerLayout, new ErrorFragment());
+            ft.commit();
         }
+
 
         //click listener for back button
         view.findViewById(R.id.back_button).setOnClickListener(

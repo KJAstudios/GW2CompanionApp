@@ -4,5 +4,6 @@
     <string name="api_v2_url">https://api.guildwars2.com/v2</string>
     <string name="daily_endpoint">/achievements/daily</string>
     <string name="achievement_endpoint">/achievements?id=</string>
+    <string name="multiple_achievements_endpoint">/achievements?ids=</string>
 
 </resources>

@@ -21,9 +21,22 @@ public class ParsedDailyAchievements {
     private static ParsedDailyAchievements dailyAchievements;
 
 
-    //made this a singleton so that I can access it from anywhere, and only make one copy
+    /**
+     * makes this a singleton (one instance). However, if the dailies failed to load, this clears the failure and tries again
+     * @param context context to find shit
+     * @return returns the only ParseDailyAchievements in existence (hopefully)
+     */
     public static ParsedDailyAchievements getInstance(Context context) {
         if (dailyAchievements == null) {
+            try {
+                dailyAchievements = JsonParser.getDailies();
+            } catch (FailedHttpCallException e) {
+                dailyAchievements = new ParsedDailyAchievements();
+                dailyAchievements.setError(e.getMessage());
+            }
+        }
+        else if (ParsedDailyAchievements.checkDailiesFailed()){
+            dailyAchievements = null;
             try {
                 dailyAchievements = JsonParser.getDailies();
             } catch (FailedHttpCallException e) {

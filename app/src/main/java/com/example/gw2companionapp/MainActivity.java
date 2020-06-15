@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         //start the first fragment after the info for dailies are loaded
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragmentManagerLayout, new MainDailyFragment());
+        ft.replace(R.id.fragmentManagerLayout, new LoadingFragment());
         ft.commit();
 
     }
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 //MUST DOS BEFORE RELEASE
-//TODO change to start loading screen as first fragment so that if the load fails, it does not show user the app
+//TODO fix achievement level display to clean up the duplicate achieve issue
 //TODO create some sort of animation on loading screen to entertain users
 //TODO UI add rewards
 //TODO UI text formatting on achievement screen
@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
 //TODO call achievements in one dump, instead of individual calls
 //TODO add custom logos and splash screen
 //TODO change header bar text to GW2 Dailies
+//TODO check all errors being thrown by commit screen, and deal with them
 
 //KNOWN BUGS
 //fragment state not remembered when apps are switched
-//pve dailies will sometimes duplicate
+//pve dailies has duplicate, for some reason duplicate has different levels, but fails to function

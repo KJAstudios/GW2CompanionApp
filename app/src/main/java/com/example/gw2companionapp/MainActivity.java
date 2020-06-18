@@ -59,14 +59,11 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 //MUST DOS BEFORE RELEASE
-//TODO fix achievement level display to clean up the duplicate achieve issue
-//TODO create some sort of animation on loading screen to entertain users
-//TODO UI add rewards
+//TODO check achievement level display to see if fixed
+//TODO UI improve rewards display for achievements
 //TODO UI text formatting on achievement screen
 //TODO UI achievement headers for informational organization
-//TODO call achievements in one dump, instead of individual calls
 //TODO add custom logos and splash screen
-//TODO change header bar text to GW2 Dailies
 //TODO check all errors being thrown by commit screen, and deal with them
 
 //KNOWN BUGS

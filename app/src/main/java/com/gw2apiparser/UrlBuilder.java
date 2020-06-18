@@ -2,6 +2,7 @@ package com.gw2apiparser;
 
 import android.content.Context;
 
+import com.datastructures.FullAchievement;
 import com.example.gw2companionapp.MainActivity;
 import com.example.gw2companionapp.R;
 import com.jsonclasses.DailiesClasses;
@@ -62,21 +63,49 @@ public class UrlBuilder {
 
     /**
      * returns the url of an unknown amount of achievements
+     *
      * @param achievements list of achievements to make a url for
      * @return the completed URL as a String
      */
-    public static String getAchievementsURL(ArrayList<DailiesClasses.DailyAchievement> achievements){
+    public static String getAchievementsURL(ArrayList<DailiesClasses.DailyAchievement> achievements) {
         String Url = getBaseUrl(MainActivity.context, 2);
         Url += MainActivity.context.getString(R.string.multiple_achievements_endpoint);
-        for(int i = 0; i < achievements.size(); i++){
+        for (int i = 0; i < achievements.size(); i++) {
             String id = Integer.toString(achievements.get(i).id);
-            if(i == 0){
-                Url+=id;
-            }
-            else{
-                Url = Url +"," + id;
+            if (i == 0) {
+                Url += id;
+            } else {
+                Url = Url + "," + id;
             }
         }
         return Url;
     }
+
+    /**
+     * returns the url of an unknown amount of item ids
+     *
+     * @param achievements list of achievements to get the items for
+     * @return the completed URL of achievement items to get
+     */
+    public static String getDailyAchievementsRewardsURL(ArrayList<FullAchievement> achievements) {
+        String Url = getBaseUrl(MainActivity.context, 2);
+        Url += MainActivity.context.getString(R.string.items_endpoint);
+        for (int i = 0; i < achievements.size(); i++) {
+            for (DailiesClasses.SingleAchievement.Reward reward : achievements.get(i).getRewards()) {
+                if (i == 0) {
+                    Url += reward.id;
+                } else {
+                    Url = Url + "," + reward.id;
+                }
+            }
+        }
+        return Url;
+    }
+
+    /*
+    private static <T> String createIdString(List<T> list) {
+
+    }
+
+     */
 }

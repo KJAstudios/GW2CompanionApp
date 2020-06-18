@@ -66,10 +66,11 @@ public class DailyFragment extends Fragment {
     private void populateAchievementList(View view) {
         parsedAchievements = ParsedDailyAchievements.getInstance(MainActivity.context);
         LinearLayout achievementList = view.findViewById(R.id.achievement_layout);
-        for (FullAchievement achievement : parsedAchievements.getAchieveList(dailyType)) {
-            Button button = createButton(achievement);
+        for (int i = 0; i < parsedAchievements.getAchieveList(dailyType).size(); i++) {
+            FullAchievement achievement = parsedAchievements.getAchieveList(dailyType).get(i);
+            Button button = createButton(i, achievement);
             achievementList.addView(button);
-            setButtonListener(achievement);
+            setButtonListener(i);
         }
     }
 
@@ -79,28 +80,37 @@ public class DailyFragment extends Fragment {
      * @param achievement what achievement to display the name of
      * @return
      */
-    private Button createButton(FullAchievement achievement) {
+    private Button createButton(int i, FullAchievement achievement) {
         Button button = new Button(MainActivity.context);
-        button.setId(achievement.getId());
+        button.setId(i);
         button.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        button.setText(achievement.getName());
+        String text = achievement.getName();
+        text += "\n";
+        if(achievement.getLevelMax() == achievement.getLevelMin()){
+            text = text + "Level " + achievement.getLevelMax();
+        }
+        else {
+            text = text + "Level " + achievement.getLevelMin()
+                    + " - " + achievement.getLevelMax();
+        }
+        button.setText(text);
         return button;
     }
 
     /**
      * sets the click listeners for the achievement list by bundling required info for fragment
      *
-     * @param achievement the achievement to set
+     * @param id single digit id of achievement in list of achievements
      */
-    private void setButtonListener(final FullAchievement achievement) {
-        getView().findViewById(achievement.getId()).setOnClickListener(new View.OnClickListener() {
+    private void setButtonListener(final int id) {
+        getView().findViewById(id).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AchievementFragment fragment = new AchievementFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("dailyType", dailyType);
-                bundle.putInt("achieveId", achievement.getId());
+                bundle.putInt("achieveId", id);
                 fragment.setArguments(bundle);
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.fragmentManagerLayout, fragment);

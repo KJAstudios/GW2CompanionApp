@@ -23,8 +23,9 @@ public class ParsedDailyAchievements {
 
     /**
      * makes this a singleton (one instance). However, if the dailies failed to load, this clears the failure and tries again
+     *
      * @param context context to find shit
-     * @return returns the only ParseDailyAchievements in existence (hopefully)
+     * @return returns the only ParsedDailyAchievements in existence (hopefully)
      */
     public static ParsedDailyAchievements getInstance(Context context) {
         if (dailyAchievements == null) {
@@ -34,8 +35,7 @@ public class ParsedDailyAchievements {
                 dailyAchievements = new ParsedDailyAchievements();
                 dailyAchievements.setError(e.getMessage());
             }
-        }
-        else if (ParsedDailyAchievements.checkDailiesFailed()){
+        } else if (ParsedDailyAchievements.checkDailiesFailed()) {
             dailyAchievements = null;
             try {
                 dailyAchievements = JsonParser.getDailies();

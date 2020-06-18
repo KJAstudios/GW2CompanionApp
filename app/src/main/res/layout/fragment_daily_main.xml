@@ -20,18 +20,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/fractal_daily_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/daily_fractals"
-            android:text="@string/fractal_daily_text" />
-
-        <Button
             android:id="@+id/pve_daily_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/daily_achievement"
-            android:text="@string/pve_daily_text" />
+            android:text="@string/pve_daily_text"/>
 
         <Button
             android:id="@+id/pvp_daily_button"
@@ -46,6 +39,13 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/world_vs_world"
             android:text="@string/wvw_daily_text" />
+
+        <Button
+            android:id="@+id/fractal_daily_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/daily_fractals"
+            android:text="@string/fractal_daily_text" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

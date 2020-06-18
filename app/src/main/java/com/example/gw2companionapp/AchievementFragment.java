@@ -14,8 +14,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.datastructures.FullAchievement;
 import com.datastructures.ParsedDailyAchievements;
+import com.jsonclasses.ItemClass;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public class AchievementFragment extends Fragment {
     private String dailyType;
@@ -42,19 +45,30 @@ public class AchievementFragment extends Fragment {
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         //get the achievement data
         ParsedDailyAchievements dailyAchievements = ParsedDailyAchievements.getInstance(MainActivity.context);
-        FullAchievement achievement = dailyAchievements.getAchievement(dailyType, id);
+        FullAchievement achievement = dailyAchievements.getAchieveList(dailyType).get(id);
 
         //set text fields
         TextView nameText = view.findViewById(R.id.achieve_name);
         TextView reqText = view.findViewById(R.id.achieve_reqs);
+        TextView rewardText = view.findViewById(R.id.achieve_reward);
         nameText.setText(achievement.getName());
         //if there isn't an achievement description, don't show it
-
         if (!(achievement.getDescription().equals(""))) {
             addDescText(view, achievement.getDescription());
         }
         reqText.setText(achievement.getRequirement());
 
+        //set and display rewards
+        ArrayList<ItemClass> rewardList = achievement.getRewardList();
+        String rewards = "";
+        for (int i = 0; i < rewardList.size(); i++) {
+            if (rewardList.size() == 1) {
+                rewards = rewardList.get(i).getName();
+            } else {
+                rewards = rewards + rewardList.get(i).getName() + "\n";
+            }
+        }
+        rewardText.setText(rewards);
         //click listener for back button
         view.findViewById(R.id.back_button).setOnClickListener(
                 new View.OnClickListener() {

@@ -4,6 +4,7 @@ import com.datastructures.FullAchievement;
 import com.datastructures.ParsedDailyAchievements;
 import com.gw2apiparser.FailedHttpCallException;
 import com.jsonclasses.DailiesClasses;
+import com.jsonclasses.ItemClass;
 import com.jsonclasses.JsonParser;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class DailiesToParsedDailies {
             for (int i = 0; i < dailyList.size(); i++) {
                 DailiesClasses.DailyAchievement dailyAchievement = dailyList.get(i);
                 DailiesClasses.SingleAchievement singleAchievement = null;
-                //this makes sure all the dailies get parsed, even thought there is a duplicate
+                //this makes sure all the dailies get parsed, even though there is a duplicate
                 for (DailiesClasses.SingleAchievement achieve : singleAchievements) {
                     if (dailyAchievement.id == achieve.getId()) {
                         singleAchievement = achieve;
@@ -67,7 +68,48 @@ public class DailiesToParsedDailies {
                 tempList.add(tempAchievement);
             }
         }
+        tempList = parseRewards(tempList);
         return tempList;
+    }
 
+    /**
+     * adds the parsed reward information to the achievements they belong to
+     *
+     * @param dailyList list of achievements to add rewards to
+     * @return dailyList after rewards have been added
+     * @throws FailedHttpCallException thrown if there is a data acquisition issue
+     */
+    private static ArrayList<FullAchievement> parseRewards(ArrayList<FullAchievement> dailyList)
+            throws FailedHttpCallException {
+        ArrayList<ItemClass> parsedRewards = JsonParser.getAchievementRewards(dailyList);
+        for (FullAchievement achievement : dailyList) {
+            for (int i = 0; i < achievement.getRewards().size(); i++) {
+                int id = achievement.getRewards().get(i).id;
+                for (int c = 0; c < parsedRewards.size(); c++) {
+                    if (parsedRewards.get(c).getId() == id && !checkIfRewardInList(id, achievement)) {
+                        achievement.addReward(parsedRewards.get(c));
+                    }
+                }
+            }
+        }
+        return dailyList;
+    }
+
+    /**
+     * checks if the reward is in the reward list
+     *
+     * @param id          id of reward to check
+     * @param achievement achievement to make sure there is no duplicate rewards
+     * @return true if reward is in the achievement's reward list
+     */
+    private static Boolean checkIfRewardInList(int id, FullAchievement achievement) {
+        if (!achievement.getRewardList().isEmpty()) {
+            for (ItemClass reward : achievement.getRewardList()) {
+                if (reward.getId() == id) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

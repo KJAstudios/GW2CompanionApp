@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GW2CompanionApp</string>
+    <string name="app_name">GW2 Dailies</string>
 
     <!-- MainDailyFragment Strings -->
     <string name="fractal_daily_text">Fractal Dailies</string>

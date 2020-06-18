@@ -1,5 +1,6 @@
 package com.jsonclasses;
 
+import com.datastructures.FullAchievement;
 import com.datastructures.ParsedDailyAchievements;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -71,11 +72,41 @@ public class JsonParser {
         if (result == null) {
             throw new FailedHttpCallException("Failed to retrieve info");
         }
-        Type userListType = new TypeToken<ArrayList<DailiesClasses.SingleAchievement>>(){}.getType();
+        Type userListType = new TypeToken<ArrayList<DailiesClasses.SingleAchievement>>() {
+        }.getType();
         ArrayList<DailiesClasses.SingleAchievement> allSingleAchievements = gson.fromJson(
                 result, userListType);
         return allSingleAchievements;
 
+    }
+
+    /**
+     * gets a list of rewards for the daily achievements
+     *
+     * @param achievements list of daily achievements
+     * @return returns the list of rewards for ALL achievements in list given
+     * @throws FailedHttpCallException thrown if error making api calls
+     */
+    public static ArrayList<ItemClass> getAchievementRewards(
+            ArrayList<FullAchievement> achievements) throws FailedHttpCallException {
+        String result = null;
+        Gson gson = new Gson();
+        HttpGetRequest getRequest = new HttpGetRequest();
+        String url = UrlBuilder.getDailyAchievementsRewardsURL(achievements);
+        try {
+            result = getRequest.execute(url).get();
+        } catch (InterruptedException e) {
+            throw new FailedHttpCallException("HTTP call interrupted");
+        } catch (ExecutionException e) {
+            throw new FailedHttpCallException("HTTP call failed");
+        }
+        if (result == null) {
+            throw new FailedHttpCallException("Failed to retrieve info");
+        }
+        Type userListType = new TypeToken<ArrayList<ItemClass>>() {
+        }.getType();
+        ArrayList<ItemClass> allDailyItems = gson.fromJson(result, userListType);
+        return allDailyItems;
     }
 }
 

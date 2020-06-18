@@ -30,9 +30,9 @@ public class DailiesClasses {
         }
 
         public class Reward {
-            String type;
-            int id;
-            int count;
+            public String type;
+            public int id;
+            public int count;
         }
     }
 

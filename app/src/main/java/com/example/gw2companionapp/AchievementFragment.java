@@ -51,10 +51,14 @@ public class AchievementFragment extends Fragment {
         TextView nameText = view.findViewById(R.id.achieve_name);
         TextView reqText = view.findViewById(R.id.achieve_reqs);
         TextView rewardText = view.findViewById(R.id.achieve_reward);
+
         nameText.setText(achievement.getName());
         //if there isn't an achievement description, don't show it
-        if (!(achievement.getDescription().equals(""))) {
-            addDescText(view, achievement.getDescription());
+        if (doesDescriptionExist(achievement)) {
+            setDescText(view, achievement.getDescription());
+        } else{
+            view.findViewById(R.id.acheive_desc).setVisibility(View.GONE);
+            view.findViewById(R.id.DescriptionTitle).setVisibility(View.GONE);
         }
         reqText.setText(achievement.getRequirement());
 
@@ -104,41 +108,16 @@ public class AchievementFragment extends Fragment {
      * @param view        view to create text in
      * @param description what to set the text to
      */
-    private void addDescText(View view, String description) {
-        //get the layout for the fragment
-        ConstraintLayout layout = view.findViewById(R.id.achievement_layout);
+    private void setDescText(View view, String description) {
+        TextView DescriptionText = view.findViewById(R.id.acheive_desc);
+        DescriptionText.setText(description);
+    }
 
-        //make the TextView from the template given
-        TextView text = (TextView) getLayoutInflater().inflate(
-                R.layout.achievement_body_text_template, null);
-
-        //set the text wrapping via ViewGroup.LayoutParams
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        //now set everything that needs to be set, and add to the layout
-        text.setLayoutParams(layoutParams);
-        layout.addView(text);
-        text.setText(description);
-        text.setId(R.id.acheive_desc);
-
-
-        //before leaving, change the constraints for the textViews
-        ConstraintSet set = new ConstraintSet();
-        set.clone(layout);
-        //set constraints of added description box
-        set.connect(view.findViewById(R.id.acheive_desc).getId(), ConstraintSet.TOP,
-                view.findViewById(R.id.achieve_name).getId(), ConstraintSet.BOTTOM, getDpFromPx(16));
-        set.connect(view.findViewById(R.id.acheive_desc).getId(), ConstraintSet.START,
-                view.findViewById(R.id.achieve_name).getId(), ConstraintSet.START, getDpFromPx(24));
-        set.connect(view.findViewById(R.id.acheive_desc).getId(), ConstraintSet.END,
-                view.findViewById(R.id.achieve_name).getId(), ConstraintSet.END, getDpFromPx(24));
-
-        //set the constrains of the requirements box
-        set.connect(view.findViewById(R.id.achieve_reqs).getId(), ConstraintSet.TOP,
-                view.findViewById(R.id.acheive_desc).getId(), ConstraintSet.BOTTOM, getDpFromPx(16));
-        set.applyTo(layout);
-
+    private boolean doesDescriptionExist(FullAchievement achievement){
+        if(achievement.getDescription().equals("")){
+            return false;
+        }
+        return true;
     }
 
     /**

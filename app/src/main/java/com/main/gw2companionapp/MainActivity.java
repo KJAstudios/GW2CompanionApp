@@ -1,4 +1,4 @@
-package com.example.gw2companionapp;
+package com.main.gw2companionapp;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.datastructures.ParsedDailyAchievements;
+import com.example.gw2companionapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 //MUST DOS BEFORE RELEASE
-//TODO check achievement level display to see if fixed
 //TODO UI improve rewards display for achievements
 //TODO UI text formatting on achievement screen
 //TODO UI achievement headers for informational organization

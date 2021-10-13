@@ -1,4 +1,4 @@
-package com.example.gw2companionapp;
+package com.main.gw2companionapp;
 
 import android.os.Handler;
 import android.os.HandlerThread;

@@ -1,4 +1,4 @@
-package com.example.gw2companionapp;
+package com.main.gw2companionapp;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.gw2companionapp.R;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -1,4 +1,4 @@
-package com.example.gw2companionapp;
+package com.main.gw2companionapp;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.datastructures.FullAchievement;
 import com.datastructures.ParsedDailyAchievements;
+import com.example.gw2companionapp.R;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainDailyFragment">
+    tools:context="com.main.gw2companionapp.MainDailyFragment">
 
     <LinearLayout
         android:id="@+id/main_daily_layout"

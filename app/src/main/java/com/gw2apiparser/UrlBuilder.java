@@ -3,7 +3,7 @@ package com.gw2apiparser;
 import android.content.Context;
 
 import com.datastructures.FullAchievement;
-import com.example.gw2companionapp.MainActivity;
+import com.main.gw2companionapp.MainActivity;
 import com.example.gw2companionapp.R;
 import com.jsonclasses.DailiesClasses;
 

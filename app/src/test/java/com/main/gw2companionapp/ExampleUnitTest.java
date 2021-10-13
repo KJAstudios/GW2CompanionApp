@@ -1,4 +1,4 @@
-package com.example.gw2companionapp;
+package com.main.gw2companionapp;
 
 import org.junit.Test;
 

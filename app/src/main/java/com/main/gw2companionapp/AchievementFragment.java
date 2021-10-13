@@ -1,4 +1,4 @@
-package com.example.gw2companionapp;
+package com.main.gw2companionapp;
 
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -7,13 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.datastructures.FullAchievement;
 import com.datastructures.ParsedDailyAchievements;
+import com.example.gw2companionapp.R;
 import com.jsonclasses.ItemClass;
 
 import org.jetbrains.annotations.NotNull;

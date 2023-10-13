@@ -101,11 +101,4 @@ public class UrlBuilder {
         }
         return Url;
     }
-
-    /*
-    private static <T> String createIdString(List<T> list) {
-
-    }
-
-     */
 }

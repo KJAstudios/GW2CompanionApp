@@ -47,7 +47,6 @@ public class ParsedDailyAchievements {
         return dailyAchievements;
     }
 
-    //checker to see if dailies have loaded/failed yet
     public static boolean checkDailiesLoaded() {
         if (dailyAchievements == null) {
             return false;
@@ -57,7 +56,6 @@ public class ParsedDailyAchievements {
         return true;
     }
 
-    //checker to see if the dailies failed to load
     public static boolean checkDailiesFailed() {
         if (dailyAchievements != null) {
             if (dailyAchievements.getError() != null) {
@@ -67,7 +65,6 @@ public class ParsedDailyAchievements {
         return false;
     }
 
-    //getter so you can select what array to get, instead of having to specify
     public ArrayList<FullAchievement> getAchieveList(String type) {
         switch (type) {
             case "pve":
@@ -82,53 +79,27 @@ public class ParsedDailyAchievements {
         return null;
     }
 
-    public FullAchievement getAchievement(String type, int id) {
-        ArrayList<FullAchievement> list = getAchieveList(type);
-        for (FullAchievement achievement : list) {
-            if (achievement.getId() == id) {
-                return achievement;
-            }
-        }
-        return null;
-    }
-
     /**
      * getters and setters for the different achievement lists
      */
-    public ArrayList<FullAchievement> getPve() {
-        return pve;
-    }
 
     public void setPve(ArrayList<FullAchievement> pve) {
         this.pve = pve;
     }
 
-    public ArrayList<FullAchievement> getPvp() {
-        return pvp;
-    }
 
     public void setPvp(ArrayList<FullAchievement> pvp) {
         this.pvp = pvp;
     }
 
-    public ArrayList<FullAchievement> getWvw() {
-        return wvw;
-    }
 
     public void setWvw(ArrayList<FullAchievement> wvw) {
         this.wvw = wvw;
     }
 
-    public ArrayList<FullAchievement> getFractals() {
-        return fractals;
-    }
 
     public void setFractals(ArrayList<FullAchievement> fractals) {
         this.fractals = fractals;
-    }
-
-    public ArrayList<FullAchievement> getSpecial() {
-        return special;
     }
 
     public void setSpecial(ArrayList<FullAchievement> special) {

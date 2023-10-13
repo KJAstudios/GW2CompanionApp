@@ -24,7 +24,7 @@ public class JsonParser {
      *                                 propagated to the actual application fragment
      */
     public static ParsedDailyAchievements getDailies() throws FailedHttpCallException {
-        String result = null;
+        String result;
         Gson gson = new Gson();
         String url = UrlBuilder.getDailyURL();
         HttpGetRequest getRequest = new HttpGetRequest();
@@ -38,6 +38,7 @@ public class JsonParser {
         if (result == null) {
             throw new FailedHttpCallException("Failed to retrieve info");
         }
+        
         DailiesClasses.AllDailies dailies;
         try {
             dailies = gson.fromJson(result, DailiesClasses.AllDailies.class);
